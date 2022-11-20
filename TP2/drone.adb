@@ -65,7 +65,9 @@ begin
         Put_line("Que faire : (d)émarrer (m)onter de(s)endre (q)uitter ?");
         Get(choix);
         Case choix is
-            when 'd' => demarre := True;
+            when 'd' =>
+                demarre := True;
+                Put_line("Drone démarré");
             when 'm' => 
                 if demarre then
                     altitude := altitude + 1;
@@ -80,6 +82,7 @@ begin
             when 's' => 
                 if demarre and altitude > 0 then
                     altitude := altitude - 1;
+                    Put_line("Nouvelle altitude : " & Integer'Image(altitude));
                 else
 
                     if not demarre then
