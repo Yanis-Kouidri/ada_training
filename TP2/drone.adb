@@ -48,35 +48,52 @@
 --
 
 with Ada.Text_IO; use Ada.Text_IO;
-with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 
 procedure drone is
     altitude: Integer; -- Altitude du drone
-    quitte: Bool; -- L'utilisateur souhaite quitté
-    demarre: Bool; -- Le drone est il demarré ?
-    choix: Char; -- Choix de l'utilisateur
-    a_porte: Bool; -- Le drone est il a porté ?
+    quitte: Boolean; -- L'utilisateur souhaite quitté
+    demarre: Boolean; -- Le drone est il demarré ?
+    choix: Character; -- Choix de l'utilisateur
+    a_porte: Boolean; -- Le drone est il a porté ?
 begin
     altitude := 0;
-    delarre := false;
+    demarre := false;
     quitte := false;
+    a_porte := true;
 
     loop
-        Put("Que faire : (d)émarrer (m)onter de(s)endre (q)uitter ?");
+        Put_line("Que faire : (d)émarrer (m)onter de(s)endre (q)uitter ?");
         Get(choix);
         Case choix is
             when 'd' => demarre := True;
             when 'm' => 
                 if demarre then
                     altitude := altitude + 1;
+                    Put_line("Nouvelle altitude : " & Integer'Image(altitude));
+                else
+                    Put_line("Impossible le drone est éteint");
+                end if;
+                if altitude > 5 then
+                    a_porte := false;
+                    Put_line("Signal perdu");
                 end if;
             when 's' => 
                 if demarre and altitude > 0 then
                     altitude := altitude - 1;
+                else
+
+                    if not demarre then
+                        Put_line("Impossible le drone est éteint");
+                    else
+                        Put_line("Le drone ne peut pas descendre plus");
+                    end if;
+
                 end if;
             when 'q' => quitte := true;
-            when others => Put("Choix incorrecte");
+            when others => Put_line("Choix incorrecte");
         end case;
-    for a_porte and not quitte
+    exit when not a_porte or quitte;
+    end loop;
+    
 
 end drone;  
