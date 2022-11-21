@@ -14,10 +14,10 @@
 --          A21 Demander à l'utilisateur de faire une tentative
 --          A22 Compter le nombre de tentative
 --          A23 Indiquer à l'utilisateur s'il a bon, ou s'il est au dessus ou en dessous  
---      JusquA tentative = nombre tiré
+--      JusquA tentative = nb_tire
 --
 -- R2 : Comment A13 ?
---      Afficher(" Vous avez trouvez en : " nb_tentative) (nb_tentative : in)
+--      Afficher(" Vous avez trouvé en : " nb_tentative) (nb_tentative : in)
 --
 -- R3 : Comment A21 ?
 --      Afficher("A quel nombre je pense ?")
@@ -42,6 +42,7 @@
 --      
 
 with Ada.Text_IO; use Ada.Text_IO;
+with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 with Alea; use Alea;
 procedure devin1 is
     nb_tire: Integer;
@@ -50,10 +51,25 @@ procedure devin1 is
 begin
     nb_tentative := 0;
     nb_tire := Alea_1_100;
-    Put_line(Integer'Image(nb_tire));
+    
+    loop
 
+        Put_line("A quel nombre je pense ? Votre tentative : ");
+        Get(tentative);
+        nb_tentative := nb_tentative + 1; 
+        if tentative /= nb_tire then
+            if tentative > nb_tire then
+                Put_line("C'est moins");
+            else
+                Put_line("C'est plus");
+            end if;
+        else
+            put_line("Trouvé !");
+        end if;
 
+    exit when tentative = nb_tire;
+    end loop;
 
-
+    put_line("Vous avez fait : " & Integer'Image(nb_tentative) & " tentatives !");
 
 end devin1; 
