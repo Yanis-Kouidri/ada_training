@@ -7,9 +7,10 @@
 --      A13 Afficher le nombre de tentative de l'utilisateur 
 
 -- R2 : Comment A11 ?
---      nb_tire = alea_1_100 
+--      nb_tire = alea_1_100   # Appel de fonction alea_1_100
 
 -- R2 : Comment A12 ?
+--      nb_tentative = 0
 --      Répéter
 --          A21 Demander à l'utilisateur de faire une tentative
 --          A22 Compter le nombre de tentative
