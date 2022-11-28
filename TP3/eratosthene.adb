@@ -8,10 +8,10 @@ procedure eratosthene is
 begin
     Put("Donner n : ");
     Get(n);
-    new_line;
     for i in 2..n loop
         un_tab(i) := i;
     end loop;
+
     for i in 2..n loop
         if un_tab(i) /= 0 then
             Put_line(Integer'Image(un_tab(i)));
