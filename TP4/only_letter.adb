@@ -10,10 +10,16 @@ begin
     get_line(nom, l_nom);
 
     for i in 1..l_nom loop
-        if (character'pos(nom(i)) >= character'pos('a') and  character'pos(nom(i)) <= character'pos('z')) then
-            nom2(j) := nom(i);
-            j := j +1;
+        if not(character'pos(nom(i)) >= character'pos('a') and  character'pos(nom(i)) <= character'pos('z')) and i <= l_nom then
+            if i /= l_nom then
+                for j in i..l_nom-1 loop
+                    nom(j) := nom(j+1);
+                end loop;
+                -- put_line(nom); -- Pour debug
+            end if;
+            l_nom := l_nom - 1;
+
         end if;
     end loop;
-    put_line(nom2);
+    put_line(nom(1..l_nom));
 end only_letter; 
