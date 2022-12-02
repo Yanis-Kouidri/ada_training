@@ -1,5 +1,7 @@
 with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
+with Ada.Unchecked_Deallocation ;
+
 procedure tab_ptr_enr is
     LMAX: constant Integer := 50;
     Type PINT is access Integer;
@@ -10,6 +12,8 @@ procedure tab_ptr_enr is
         end record;
     Type PMATIERE is access Matiere;
     Type Liste_Matiere is array(1..LMAX) of PMATIERE;
+
+    procedure free is new Ada.Unchecked_Deallocation(Matiere,PMATIERE) ; 
 
     procedure init(ma_matiere : in out Matiere ; nom_matiere : in String) is
     begin
@@ -39,6 +43,9 @@ procedure tab_ptr_enr is
     Procedure init_tab(tab: in out liste_matiere) is
     begin
         for i in 1..LMAX loop
+            if tab(i) /= null then
+                free(tab(i));
+            end if;
 
             tab(i) := null;
         end loop;
@@ -49,10 +56,12 @@ procedure tab_ptr_enr is
         tab(indice) := add_matiere;
     end add_matiere;
     
+
     anglais : PMatiere;
     francais : Matiere;
     cours_n7 : Liste_Matiere;
-    choix: Integer;
+    choix: Character;
+
 
 begin
 
@@ -65,5 +74,19 @@ begin
 
    init_tab(cours_n7);
    add_matiere(cours_n7, 1, anglais); 
+
+   affiche(cours_n7(1).all);
+   loop
+       Put_line("Que vouslez vous faire ? (a)jouter, (s)upprimer, (r)eset, (a)fficher : ");
+       Get(choix);
+       Case choix is
+           when 'a' =>
+               Put_line("Quelle case ? entre 1 et 50 inclus");
+               Get(index);
+
+       end case;
+
+       exit when choix = 'q';
+   end loop;
 
 end tab_ptr_enr; 
