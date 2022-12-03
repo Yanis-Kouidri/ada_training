@@ -51,39 +51,104 @@ procedure tab_ptr_enr is
         end loop;
     end init_tab;
 
-    Procedure add_matiere(tab: in out liste_matiere ; indice: in Integer ; add_matiere: in PMatiere) is
+    Procedure add_matiere(tab: in out liste_matiere ; indice: in Integer ) is
+        nouv_matiere : PMATIERE;
+        nom_mat : String(1..5);
+        note_mat : integer; 
     begin
-        tab(indice) := add_matiere;
+        Put_line("Code matiere : (5 charactères)");
+        Get(nom_mat);
+
+        Put_line("Note matiere : (entre 0 et 20)");
+        Get(note_mat);
+        
+        nouv_matiere := new MATIERE;
+        nouv_matiere.all.code := nom_mat;
+        set_note(nouv_matiere.all, note_mat);
+        tab(indice) := nouv_matiere;
+
+        put_line("Matiere créée");
+        
+
+    Exception
+        when CONSTRAINT_ERROR => put_line("Ajout impossible, tableau non initialisé");
     end add_matiere;
+
+    Function moyenne(tab: in liste_matiere) return float is
+
+        nb_note: integer := 0;
+        moyenne: float := 0.0;
+
+    begin
+        for i in tab'range loop
+            if tab(i) /= null then
+                moyenne := moyenne + float( tab(i).all.note.all );
+                nb_note := nb_note + 1;
+            end if;
+
+        end loop;
+        moyenne := moyenne / float(nb_note);
+        return moyenne;
+
+    end moyenne;
     
 
-    anglais : PMatiere;
-    francais : Matiere;
     cours_n7 : Liste_Matiere;
     choix: Character;
+    index: Integer;
+    est_init: boolean := false;
 
 
 begin
 
-   anglais := new matiere;
-   init(anglais.all, "Angla");
-   set_note(anglais.all, 13);
-
-   init(francais, "Franc");
-   set_note(francais, 17);
-
-   init_tab(cours_n7);
-   add_matiere(cours_n7, 1, anglais); 
-
-   affiche(cours_n7(1).all);
    loop
-       Put_line("Que vouslez vous faire ? (a)jouter, (s)upprimer, (r)eset, (a)fficher : ");
+       Put_line("Que vouslez vous faire ? (a)jouter/modifier, (s)upprimer, (i)nitialisation, a(f)ficher, (m)oyenne, (q)uitter : ");
        Get(choix);
        Case choix is
            when 'a' =>
-               Put_line("Quelle case ? entre 1 et 50 inclus");
-               Get(index);
+               if est_init then
+                   Put_line("Quelle case ? entre 1 et 50 inclus");
+                   Get(index);
+                   add_matiere(cours_n7, index);
+               else
+                   put_line("Veuillez initialiser le tableau");
+               end if;
+           when 'f' =>
+               if est_init then
+                   begin
+                       Put_line("Quelle case ? entre 1 et 50 inclus");
+                       Get(index);
+                       affiche(cours_n7(index).all);
+                   Exception
+                       when CONSTRAINT_ERROR => put_line("Affichage impossible, case vide");
+                   end;
+               else
+                   put_line("Veuillez initialiser le tableau");
+               end if;
+           when 'i' =>
+               init_tab(cours_n7);
+               est_init := true;
+               put_line("Tableau (ré)initialisé. Il est désormais vide et prêt à être rempli");
+           when 's' =>
+               if est_init then
+                   Put_line("Quelle case ? entre 1 et 50 inclus");
+                   Get(index);
+                   cours_n7(index) := null;
+                   put_line("Matiere supprimée");
+               else
+                   put_line("Veuillez initialiser le tableau");
+               end if;
+           when 'm' =>
+               if est_init then
+                   Put_line(Float'Image(moyenne(cours_n7)));
+               else
+                   put_line("Veuillez initialiser le tableau");
+               end if;
+           when 'q' =>
+               put_line("Au revoir");
 
+
+           when others => Put_line("Choix impossible");
        end case;
 
        exit when choix = 'q';
