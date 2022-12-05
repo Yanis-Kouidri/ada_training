@@ -1,0 +1,42 @@
+-- fonction creer : cree un ensemble vide
+-- retour : ensemble (R)
+-- PRE
+--      - 
+-- POST
+--      - L'ensemble créé est vide
+--------------------------------------------------
+-- fonction appartient : verifie la presence d'un element dans l'ensemble
+-- x : integer (D)
+-- e : ensemble (D/R)
+-- PRE
+--      - 
+-- POST
+--      -
+--------------------------------------------------
+-- procedure ajouter
+-- ajoute un element dans l'ensemble
+-- x : integer (D)
+-- e : ensemble (D/R)
+-- PRE
+--      - Ensemble non plein 
+-- POST
+--      - Ensemble' = ensemble + element 
+--------------------------------------------------
+-- procedure supprimer
+-- supprime un element dans l'ensemble
+-- x : integer (D)
+-- e : ensemble (D/R)
+-- PRE
+--      - Ensemble non plein 
+-- POST
+--      - Ensemble' = ensemble - element 
+--------------------------------------------------
+-- procedure afficher : Affiche le contenu de l'ensemble
+-- e : ensmeble (D)
+-- PRE
+--      - 
+-- POST
+--      - 
+
+
+
