@@ -73,6 +73,7 @@ procedure liste_chainee is
 
     procedure inserer_apres(list : in T_liste_chainee; data, new_data : in Integer) is
         LISTE_VIDE_ERROR: EXCEPTION;
+        FIN_ERROR: EXCEPTION;
 
     begin
         if est_vide(list) then
@@ -80,17 +81,21 @@ procedure liste_chainee is
         else
             if list.all.element = data then
                 inserer_en_tete(list.all.suivant, new_data);
+            elsif est_vide(list.all.suivant) then
+                raise FIN_ERROR;
             else
                 inserer_apres(list.all.suivant, data, new_data);
             end if;
         end if;
     exception
-        when LISTE_VIDE_ERROR => put_line(" Erreur : Element non trouvé, ajout impossible.");
+        when LISTE_VIDE_ERROR => put_line(" Erreur : Liste vide.");
+        when FIN_ERROR => put_line(" Erreur : Element non trouvé, insertion impossible.");
     end inserer_apres; 
 
 
     procedure inserer_avant(list : in out T_liste_chainee; data, new_data : in Integer) is
         LISTE_VIDE_ERROR: EXCEPTION;
+        FIN_ERROR: EXCEPTION;
 
     begin
         if est_vide(list) then
@@ -98,12 +103,15 @@ procedure liste_chainee is
         else
             if list.all.element = data then
                 inserer_en_tete(list, new_data);
+            elsif est_vide(list.all.suivant) then
+                raise FIN_ERROR;
             else
                 inserer_avant(list.all.suivant, data, new_data);
             end if;
         end if;
     exception
-        when LISTE_VIDE_ERROR => put_line(" Erreur : Element non trouvé, ajout impossible.");
+        when LISTE_VIDE_ERROR => put_line(" Erreur : Liste vide.");
+        when FIN_ERROR => put_line(" Erreur : Element non trouvé, insertion impossible.");
     end inserer_avant; 
 
 
@@ -142,6 +150,7 @@ begin
     if est_vide(ma_liste) then
         put_line("Est vide");
     end if;
+    inserer_avant(ma_liste, 5, 1);
     inserer_en_tete(ma_liste, 1);
     inserer_en_tete(ma_liste, 2);
     inserer_en_tete(ma_liste, 3);
@@ -150,6 +159,7 @@ begin
     put_line("Ma liste");
     afficher(ma_liste);
     new_line;
+    inserer_apres(ma_liste, 9, 23);
 
     inserer_avant(ma_liste, 2, 55);
     inserer_avant(ma_liste, 1, 55);
