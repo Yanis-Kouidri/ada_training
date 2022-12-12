@@ -2,6 +2,8 @@ WITH Ada.Integer_Text_IO, Ada.Text_IO ;
 USE Ada.Integer_Text_IO, Ada.Text_IO ;
 
 PACKAGE pile_entier IS
+    TAILLE_MAX_ERROR : exception;
+    TAILLE_MIN_ERROR : exception;
     
     TMAX : constant integer := 50;
     TYPE T_tab is array (1..TMAX) of integer;

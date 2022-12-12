@@ -12,7 +12,22 @@ procedure test_pile is
 
     ma_pile : T_pile;
 begin
+    initialiser(ma_pile);
+    empiler(ma_pile, 5);
+    empiler(ma_pile, 4);
+    empiler(ma_pile, 3);
+    empiler(ma_pile, 2);
+    empiler(ma_pile, 1);
+
     put(sommet(ma_pile));
+    depiler(ma_pile);
 
+    put(sommet(ma_pile));
+    depiler(ma_pile);
 
+    put(sommet(ma_pile));
+    depiler(ma_pile);
+
+    put(sommet(ma_pile));
+    depiler(ma_pile);
 end test_pile; 
