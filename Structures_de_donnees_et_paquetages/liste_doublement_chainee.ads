@@ -33,9 +33,10 @@ PACKAGE liste_doublement_chainee IS
     -- liste pointe vers le noeud précédent ou suivant ou null
     -- exception : aucune
 
-    Procedure recherche(liste : in out T_liste);
+    Procedure recherche(liste : in out T_liste ; elem : in Integer);
     -- Sémantique : recherche un noeud dans la liste chainée et fait pointer la liste vers ce nouveau noeud.
     -- Paramètres : liste : in out type T_liste
+    -- elem : in type integer -- élément recherché
     -- Pré-condition : aucune
     -- Post-condition : liste pointe sur le noeud recherché s'il existe, sinon reste inchangé.
     -- exception : aucune
