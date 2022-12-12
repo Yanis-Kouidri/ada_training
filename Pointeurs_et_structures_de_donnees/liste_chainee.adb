@@ -4,7 +4,6 @@ with Ada.Unchecked_Deallocation ;
 procedure liste_chainee is
 
     -- Déclaration des types :
-    Type T_liste_chainee;
     Type T_cellule;
 
     -- Définition des types :
@@ -15,25 +14,21 @@ procedure liste_chainee is
             Element : Integer;
             Suivant : T_liste_chainee;
         End Record;
+
+    LISTE_VIDE_ERROR: EXCEPTION;
+    FIN_ERROR: EXCEPTION;
     -- Définiton des procédures et fonctions :
     --
     procedure free is new Ada.Unchecked_Deallocation(T_cellule, T_liste_chainee) ;  
 
     function creer_liste_vide return T_liste_chainee is 
-        new_list : T_liste_chainee;
     begin
-        new_list := null;
-
-        return new_list;
+        return null;
     end creer_liste_vide;
 
     function est_vide(list: in T_liste_chainee) return boolean is
     begin
-        if list = null then
-            return true;
-        else
-            return false;
-        end if;
+        return list = null;
     end est_vide;
 
 
@@ -72,8 +67,6 @@ procedure liste_chainee is
 
 
     procedure inserer_apres(list : in T_liste_chainee; data, new_data : in Integer) is
-        LISTE_VIDE_ERROR: EXCEPTION;
-        FIN_ERROR: EXCEPTION;
 
     begin
         if est_vide(list) then
@@ -88,14 +81,12 @@ procedure liste_chainee is
             end if;
         end if;
     exception
-        when LISTE_VIDE_ERROR => put_line(" Erreur : Liste vide.");
-        when FIN_ERROR => put_line(" Erreur : Element non trouvé, insertion impossible.");
+        when LISTE_VIDE_ERROR => put_line("Erreur : Liste vide.");
+        when FIN_ERROR => put_line("Erreur : Element non trouvé, insertion impossible.");
     end inserer_apres; 
 
 
     procedure inserer_avant(list : in out T_liste_chainee; data, new_data : in Integer) is
-        LISTE_VIDE_ERROR: EXCEPTION;
-        FIN_ERROR: EXCEPTION;
 
     begin
         if est_vide(list) then
@@ -110,14 +101,12 @@ procedure liste_chainee is
             end if;
         end if;
     exception
-        when LISTE_VIDE_ERROR => put_line(" Erreur : Liste vide.");
-        when FIN_ERROR => put_line(" Erreur : Element non trouvé, insertion impossible.");
+        when LISTE_VIDE_ERROR => put_line("Erreur : Liste vide.");
+        when FIN_ERROR => put_line("Erreur : Element non trouvé, insertion impossible.");
     end inserer_avant; 
 
 
     procedure enlever(list : in out T_liste_chainee; a_enlever : in Integer) is
-        LISTE_VIDE_ERROR: EXCEPTION;
-        FIN_ERROR: EXCEPTION;
         tmp: T_liste_chainee; 
 
     begin
@@ -135,8 +124,8 @@ procedure liste_chainee is
             end if;
         end if;
     exception
-        when LISTE_VIDE_ERROR => put_line(" Erreur : Liste vide.");
-        when FIN_ERROR => put_line(" Erreur : Element non trouvé, suppression impossible.");
+        when LISTE_VIDE_ERROR => put_line("Erreur : Liste vide.");
+        when FIN_ERROR => put_line("Erreur : Element non trouvé, suppression impossible.");
     end enlever; 
 
 
