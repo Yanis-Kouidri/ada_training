@@ -37,25 +37,25 @@ begin
             when '+' =>
                 res := sommet(ma_pile);
                 depiler(ma_pile);
-                res := res + sommet(ma_pile);
+                res := sommet(ma_pile) + res;
                 empiler(ma_pile, res);
                 put(sommet(ma_pile));
             when '-' =>
                 res := sommet(ma_pile);
                 depiler(ma_pile);
-                res := res - sommet(ma_pile);
+                res := sommet(ma_pile) - res;
                 empiler(ma_pile, res);
                 put(sommet(ma_pile));
             when '*' =>
                 res := sommet(ma_pile);
                 depiler(ma_pile);
-                res := res * sommet(ma_pile);
+                res := sommet(ma_pile) * res ; 
                 empiler(ma_pile, res);
                 put(sommet(ma_pile));
             when '/' =>
                 res := sommet(ma_pile);
                 depiler(ma_pile);
-                res := res / sommet(ma_pile);
+                res := sommet(ma_pile) / res;
                 empiler(ma_pile, res);
                 put(sommet(ma_pile));
             when others => raise OPE_ERR;
