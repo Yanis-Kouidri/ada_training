@@ -39,6 +39,8 @@ PACKAGE BODY AB IS
             Abr.all.Donnee := Donnee;
             Abr.sous_arbre_gauche := null;
             Abr.sous_arbre_droit := null;
+        elsif abr.all.donnee > Donnee then
+
         end if;
 
     end Inserer;
