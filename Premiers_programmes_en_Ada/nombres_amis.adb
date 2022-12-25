@@ -1,3 +1,44 @@
+-- Raffinage :
+--
+-- R0 : Trouver tous les couples de nombres amis entre 1 et MAX, MAX lu au clavier.
+--
+-- R1 : Comment "Trouver tous les couples de nombres amis entre 1 et MAX, MAX lu au clavier." ? 
+--
+--      Demander MAX    (out : MAX Entier)
+--      Calculer les couples d'entiers entre 1 et MAX (in : MAX)
+--      
+-- R2 : Comment "Calculer les couples d'entiers entre 1 et MAX" ?
+--
+--      Pour i allant de 2 à MAX
+--          Calculer la somme des diviseurs de i (out somme_div_i Entier)
+--          Calculer la somme des diviseurs de somme_div_i (in somme_div_i Entier ; out : i_prime Entier)
+--          Si le couple n'a pas déjà été trouvé alors
+--              Si i = i_prime alors    (in i, somme_div_i Entier)
+--                  Afficher i et somme_div_i
+--              Sinon rien
+--              Fin si
+--          Sinon Rien
+--          Fin si
+--      Fin pour
+--
+-- R3 : Comment calculer la somme des diviseur de x, x entier ?
+--
+--      somme = 0 ( out : somme Entier)
+--
+--      Pour i allant de 1 à x-1
+--          si x modulo i est = 0 alors
+--              somme = somme + i
+--          sinon rien
+--          fin si
+--      Fin pour
+--
+-- R3 : Comment "Le couple n'a pas déjà été trouvé une fois" ?
+--
+--      somme_div_i < i
+--
+--       
+--              
+--
 with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 
