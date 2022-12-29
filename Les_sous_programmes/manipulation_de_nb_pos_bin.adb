@@ -109,9 +109,13 @@ begin
     bin3 := Addition(bin1, bin2);
     affichage(bin3);
 
+    put_line("Addition de 31 et 63 en binaire : ");
     bin1 := to_base_2(31);
     bin2 := to_base_2(63);
-    affichage(Addition(bin1,bin2));
+    bin3 := Addition(bin1,bin2);
+    put_line("En binaire : ");
+    affichage(bin3);
+    put_line("En décimal : " & Integer'Image(to_base_10(bin3)));
 
 
 end manipulation_de_nb_pos_bin; 
