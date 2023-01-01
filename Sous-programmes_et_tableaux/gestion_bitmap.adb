@@ -172,8 +172,21 @@ procedure gestion_bitmap is
     --
     Procedure Compactage(P_valeurs : in out valeurs ; P_bool : in out bool; P_imin, P_nb_elem : in Integer ; P_imax : in out Integer) is
 
+        delt : Integer; -- Delta entre imax et imin
     begin
-        null;
+        delt := P_imax + 1 - P_imin;
+
+        for i in P_imin..P_imax loop     -- On parcourt le tableau
+
+            while P_bool(i) = False loop    -- A la première valeur a false trouvée
+                P_imax := P_imax - 1;    -- on décrémente
+                for j in i..P_imax loop  -- on remonte toutes les suivantes d'une case
+                    P_bool(j) := P_bool(j+1);
+                    P_valeurs(j) := P_valeurs(j+1);
+                end loop;
+            end loop;
+        end loop;
+
     end Compactage;
 
     Procedure Debug(P_imin, P_imax, P_nb_elem : in Integer) is
