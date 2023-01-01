@@ -44,20 +44,22 @@ procedure gestion_bitmap is
                 end if;
             end loop;
 
-            if ajoute = False and P_imin > 1 then   -- Cas ou l'on peut ajouer en dessous de imin
-                P_valeurs(P_imin - 1) := P_ajout;
-                P_bool(P_imin - 1) := True;
-                P_imin := P_imin - 1;
-                P_nb_elem := P_nb_elem + 1;
-            elsif P_imax < NMAX then                -- Cas ou l'on peut ajouter au dessus de Imax
-                P_valeurs(P_imax + 1) := P_ajout;
-                P_bool(P_imax + 1) := True;
-                P_imax := P_imax + 1;
-                P_nb_elem := P_nb_elem + 1;
-            else
-                Put_line("Ajout impossible, tableau plein");
-            end if;
+            if ajoute = False then
 
+                if P_imin > 1 then   -- Cas ou l'on peut ajouer en dessous de imin
+                    P_valeurs(P_imin - 1) := P_ajout;
+                    P_bool(P_imin - 1) := True;
+                    P_imin := P_imin - 1;
+                    P_nb_elem := P_nb_elem + 1;
+                elsif P_imax < NMAX  then                -- Cas ou l'on peut ajouter au dessus de Imax
+                    P_valeurs(P_imax + 1) := P_ajout;
+                    P_bool(P_imax + 1) := True;
+                    P_imax := P_imax + 1;
+                    P_nb_elem := P_nb_elem + 1;
+                else
+                    Put_line("Ajout impossible, tableau plein");
+                end if;
+            end if;
         end if;
 
     end Ajout;
@@ -93,21 +95,35 @@ procedure gestion_bitmap is
     --              La valeur en elle même n'est pas supprimé.
     --              imin et imax seront ajusté si cela est possible.
     --              Si la valeur n'est pas dans le tableau alors rien ne se passe.
+    --
     -- Paramètre : P_valeurs : valeurs entrée sortie ; Le tableau de valeur a modifier
     --             P_bool : bool entrée sortie ; Le tableau de boolean associé au tableau de valeur
     --             P_imin, P_imax : integer entrée ; Imin et imax associé au tableau de valeur
     --             P_supp : Entier entrée ; indice de la valeur a supprimer du tableau
     --             P_nb_elem : entier entrée sortie ; Nombre d'élement significatif du tableau
+    --
     -- Préconditions : 
     --      Taille de P_bool et P_valeurs < à NMAX
     --      0 < P_imin <= P_imax <= NMAX
+    --      0 < P_supp <= NMAX
     -- Post condition :
     --      Signification de la valeur passé à Faux si elle existe
     --      P_nb_elem mis à jour
     Procedure Suppression(P_valeurs : in out valeurs ; P_bool : in out bool; P_imin, P_imax, P_nb_elem : in out Integer ; P_supp : in integer) is
 
     begin
-        null;
+        P_bool(P_supp) := False; 
+
+        if P_supp <= P_imax and P_supp >= P_imin then
+            P_nb_elem := P_nb_elem - 1;
+        end if;
+
+        if P_supp = P_imax then
+            P_imax := P_imax - 1;
+        elsif P_supp = P_imin then
+            P_imin := P_imin + 1;
+        end if;
+            
     end Suppression;
 
 
