@@ -64,7 +64,7 @@ procedure gestion_bitmap is
     -- Paramètre : P_valeurs : valeurs entrée sortie ; Le tableau de valeur a modifier
     --             P_bool : bool entrée sortie ; Le tableau de boolean associé au tableau de valeur
     --             P_imin, P_imax : integer entrée ; Imin et imax associé au tableau de valeur
-    --             P_supp : réel entrée ; Valeur a supprimer au tableau
+    --             P_supp : Entier entrée ; indice de la valeur a supprimer du tableau
     --             P_nb_elem : entier entrée sortie ; Nombre d'élement significatif du tableau
     -- Préconditions : 
     --      Taille de P_bool et P_valeurs < à NMAX
@@ -72,7 +72,7 @@ procedure gestion_bitmap is
     -- Post condition :
     --      Signification de la valeur passé à Faux si elle existe
     --      P_nb_elem mis à jour
-    Procedure Suppression(P_valeurs : in out valeurs ; P_bool : in out bool; P_imin, P_imax, P_nb_elem : in out Integer ; P_supp : in float) is
+    Procedure Suppression(P_valeurs : in out valeurs ; P_bool : in out bool; P_imin, P_imax, P_nb_elem : in out Integer ; P_supp : in integer) is
 
     begin
         null;
@@ -109,11 +109,13 @@ procedure gestion_bitmap is
     --              Aucun trou veut dire qu'il n'y a aucune valeur a False entre imin et imax.
     --              Autrement dit aucun trou veut dire qu'il ny a que des true (vrai) entre imin et imax. (On atteint vite les limites du franglais)
     --              Le compactage se fait vers le haut donc imin ne bouge pas
+    --
     -- Paramètre : P_valeurs : valeurs entrée sortie; Le tableau de valeur a compacter.
     --             P_bool : bool entrée sortie; Le tableau de boolean associé au tableau de valeur
     --             P_imin : integer entrée ; Imin associé au tableau de valeur
     --             P_imax : integer entrée sortie; imax associé au tableau de valeur
     --             P_nb_elem : entier entrée ; Nombre d'élement significatif du tableau
+    --
     -- Préconditions : 
     --      Taille de P_bool et P_valeurs < à NMAX
     --      0 < P_imin <= P_imax <= NMAX
@@ -125,10 +127,88 @@ procedure gestion_bitmap is
     begin
         null;
     end Compactage;
+
+    Procedure Debug(P_imin, P_imax, P_nb_elem : in Integer) is
+    begin
+        put("Imin :");
+        put(P_imin, 3);
+        put("   Imax :");
+        put(P_imax, 3);
+        put("   Nb_val :");
+        put(P_nb_elem, 3);
+        new_line;
+    end Debug;
+
+
     
     -- Déclaration de variables
+    val1 : valeurs;
+    bool1 : bool;
+    imin1, imax1 : integer := 0;
+    nb_val1 : integer := 0;
+    
 begin
+    bool1(1) := False; -- Initialisation à faux de la première valeur
+    
+    ajout(val1, bool1, imin1, imax1, nb_val1, 1.0); -- Ajout de 1.0
+    Debug(imin1, imax1, nb_val1);
+    
+    ajout(val1, bool1, imin1, imax1, nb_val1, 2.0); -- Ajout de 2.0
+    Debug(imin1, imax1, nb_val1);
+    
+    ajout(val1, bool1, imin1, imax1, nb_val1, 3.0); -- Ajout de 3.0
+    Debug(imin1, imax1, nb_val1);
+    
+    ajout(val1, bool1, imin1, imax1, nb_val1, 4.0); -- Ajout de 4.0
+    Debug(imin1, imax1, nb_val1);
+    
+    ajout(val1, bool1, imin1, imax1, nb_val1, 5.0); -- Ajout de 5.0
+    Debug(imin1, imax1, nb_val1);
 
-    null;
+
+    suppression(val1, bool1, imin1, imax1, nb_val1, 1); -- Supprimer 1er valeur
+    Debug(imin1, imax1, nb_val1);
+
+    suppression(val1, bool1, imin1, imax1, nb_val1, 3); -- Supprimer 3eme valeur
+    Debug(imin1, imax1, nb_val1);
+
+    suppression(val1, bool1, imin1, imax1, nb_val1, 5); -- Supprimer 5eme valeur
+    Debug(imin1, imax1, nb_val1);
+
+
+    ajout(val1, bool1, imin1, imax1, nb_val1, 2.5); -- Ajout de 2.5
+    Debug(imin1, imax1, nb_val1);
+    
+    ajout(val1, bool1, imin1, imax1, nb_val1, 1.5); -- Ajout de 1.5
+    Debug(imin1, imax1, nb_val1);
+    
+    ajout(val1, bool1, imin1, imax1, nb_val1, 4.0); -- Ajout de 4.0
+    Debug(imin1, imax1, nb_val1);
+
+
+    compactage(val1, bool1, imin1, nb_val1, imax1);
+    Debug(imin1, imax1, nb_val1);
+   
+
+    Put("Recherche de 4.0 :");
+    Put (recherche(val1, bool1, imin1, imax1, nb_val1, 4.0), 3); -- Recherche de 4.0
+    new_line;
+    Put("Recherche de 1.0 :");
+    Put (recherche(val1, bool1, imin1, imax1, nb_val1, 1.0), 3); -- Recherche de 1.0
+    new_line;
+
+
+    suppression(val1, bool1, imin1, imax1, nb_val1, 3); -- Supprimer 3eme valeur
+    Debug(imin1, imax1, nb_val1);
+
+    suppression(val1, bool1, imin1, imax1, nb_val1, 4); -- Supprimer 4eme valeur
+    Debug(imin1, imax1, nb_val1);
+
+    Put("Recherche de 4.0 :");
+    Put (recherche(val1, bool1, imin1, imax1, nb_val1, 4.0), 3); -- Recherche de 4.0
+    new_line;
+
+    compactage(val1, bool1, imin1, nb_val1, imax1);
+    Debug(imin1, imax1, nb_val1);
 
 end gestion_bitmap; 
