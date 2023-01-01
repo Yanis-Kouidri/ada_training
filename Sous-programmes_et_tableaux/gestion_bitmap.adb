@@ -1,5 +1,6 @@
 with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
+with Ada.Float_Text_IO; use Ada.Float_Text_IO;
 procedure gestion_bitmap is
     -- Déclaration de types
     NMAX: constant integer := 10;
@@ -84,8 +85,16 @@ procedure gestion_bitmap is
     --      retourne 0 si valeur non trouvé
     --      retourne i, 0 < i <= NMAX si la valeur est trouvé. i étant l'indice de la valeur recherchée.
     Function Recherche(P_valeurs : in valeurs ; P_bool : in bool; P_imin, P_imax, P_nb_elem : in Integer ; P_recherche : in float) return integer is
+        resultat : Integer := 0;
+        trouve : boolean := False;
     begin 
-       return 0;
+        for i in P_imin..P_imax loop
+            if not trouve and P_bool(i) and P_valeurs(i) = P_recherche then
+                resultat := i;
+                trouve := True;
+            end if;
+        end loop;
+       return resultat;
     end Recherche; 
     
     
@@ -147,7 +156,45 @@ procedure gestion_bitmap is
     Procedure Affichage(P_valeurs : in valeurs ; P_bool : in bool; P_imin, P_imax, P_nb_elem : in Integer) is
 
     begin
-        null;
+        -- Étape 1 :
+
+        put("Indice minimum :");
+        put(P_imin, 3);
+        put("   Indice maximum :");
+        put(P_imax, 3);
+        new_line;
+        put_line("--------------------");
+
+        for i in P_imin..P_imax loop
+            put(i, 3);
+            if P_bool(i) then
+                put("   True  ");
+            else
+                put("   False  ");
+            end if;
+            put(P_valeurs(i), 3);
+
+            new_line;
+        end loop;
+        put_line("--------------------");
+        new_line;
+
+        -- Étape 2 :
+
+        put("Nombre effectif d'élément : ");
+        put(P_nb_elem, 3);
+        new_line;
+
+        put_line("--------------------");
+        for i in P_imin..P_imax loop
+            if P_bool(i) then
+                put(P_valeurs(i), 3);
+            end if;
+        end loop;
+        new_line;
+        put_line("--------------------");
+        new_line;
+        new_line;
     end Affichage;
     
 
@@ -212,43 +259,43 @@ begin
     bool1(1) := False; -- Initialisation à faux de la première valeur
     
     ajout(val1, bool1, imin1, imax1, nb_val1, 1.0); -- Ajout de 1.0
-    Debug(imin1, imax1, nb_val1);
+    Affichage(val1, bool1, imin1, imax1, nb_val1);
     
     ajout(val1, bool1, imin1, imax1, nb_val1, 2.0); -- Ajout de 2.0
-    Debug(imin1, imax1, nb_val1);
+    Affichage(val1, bool1, imin1, imax1, nb_val1);
     
     ajout(val1, bool1, imin1, imax1, nb_val1, 3.0); -- Ajout de 3.0
-    Debug(imin1, imax1, nb_val1);
+    Affichage(val1, bool1, imin1, imax1, nb_val1);
     
     ajout(val1, bool1, imin1, imax1, nb_val1, 4.0); -- Ajout de 4.0
-    Debug(imin1, imax1, nb_val1);
+    Affichage(val1, bool1, imin1, imax1, nb_val1);
     
     ajout(val1, bool1, imin1, imax1, nb_val1, 5.0); -- Ajout de 5.0
-    Debug(imin1, imax1, nb_val1);
+    Affichage(val1, bool1, imin1, imax1, nb_val1);
 
 
     suppression(val1, bool1, imin1, imax1, nb_val1, 1); -- Supprimer 1er valeur
-    Debug(imin1, imax1, nb_val1);
+    Affichage(val1, bool1, imin1, imax1, nb_val1);
 
     suppression(val1, bool1, imin1, imax1, nb_val1, 3); -- Supprimer 3eme valeur
-    Debug(imin1, imax1, nb_val1);
+    Affichage(val1, bool1, imin1, imax1, nb_val1);
 
     suppression(val1, bool1, imin1, imax1, nb_val1, 5); -- Supprimer 5eme valeur
-    Debug(imin1, imax1, nb_val1);
+    Affichage(val1, bool1, imin1, imax1, nb_val1);
 
 
     ajout(val1, bool1, imin1, imax1, nb_val1, 2.5); -- Ajout de 2.5
-    Debug(imin1, imax1, nb_val1);
+    Affichage(val1, bool1, imin1, imax1, nb_val1);
     
     ajout(val1, bool1, imin1, imax1, nb_val1, 1.5); -- Ajout de 1.5
-    Debug(imin1, imax1, nb_val1);
+    Affichage(val1, bool1, imin1, imax1, nb_val1);
     
     ajout(val1, bool1, imin1, imax1, nb_val1, 4.0); -- Ajout de 4.0
-    Debug(imin1, imax1, nb_val1);
+    Affichage(val1, bool1, imin1, imax1, nb_val1);
 
 
     compactage(val1, bool1, imin1, nb_val1, imax1);
-    Debug(imin1, imax1, nb_val1);
+    Affichage(val1, bool1, imin1, imax1, nb_val1);
    
 
     Put("Recherche de 4.0 :");
@@ -260,16 +307,16 @@ begin
 
 
     suppression(val1, bool1, imin1, imax1, nb_val1, 3); -- Supprimer 3eme valeur
-    Debug(imin1, imax1, nb_val1);
+    Affichage(val1, bool1, imin1, imax1, nb_val1);
 
     suppression(val1, bool1, imin1, imax1, nb_val1, 4); -- Supprimer 4eme valeur
-    Debug(imin1, imax1, nb_val1);
+    Affichage(val1, bool1, imin1, imax1, nb_val1);
 
     Put("Recherche de 4.0 :");
     Put (recherche(val1, bool1, imin1, imax1, nb_val1, 4.0), 3); -- Recherche de 4.0
     new_line;
 
     compactage(val1, bool1, imin1, nb_val1, imax1);
-    Debug(imin1, imax1, nb_val1);
+    Affichage(val1, bool1, imin1, imax1, nb_val1);
 
 end gestion_bitmap; 
