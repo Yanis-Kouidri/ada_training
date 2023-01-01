@@ -26,8 +26,40 @@ procedure gestion_bitmap is
     --      nb_elem incrémenté
     Procedure Ajout(P_valeurs : in out valeurs ; P_bool : in out bool; P_imin, P_imax, P_nb_elem : in out Integer ; P_ajout : in float) is
 
+        ajoute : boolean := false;
     begin
-        null;
+        if P_imin = 0 and P_imax = 0 then -- Cas ou le tableau est vide
+            P_valeurs(1) := P_ajout;
+            P_bool(1) := True;
+            P_imin := 1;
+            P_imax := 1;
+            P_nb_elem := 1;
+        else                               -- Cas ou l'on peut ajouter entre imin et imax
+            for i in P_imin..P_imax loop
+                if P_bool(i) = False and ajoute = False then
+                    P_valeurs(i) := P_ajout;
+                    P_bool(i) := True;
+                    ajoute := True;
+                    P_nb_elem := P_nb_elem + 1;
+                end if;
+            end loop;
+
+            if ajoute = False and P_imin > 1 then   -- Cas ou l'on peut ajouer en dessous de imin
+                P_valeurs(P_imin - 1) := P_ajout;
+                P_bool(P_imin - 1) := True;
+                P_imin := P_imin - 1;
+                P_nb_elem := P_nb_elem + 1;
+            elsif P_imax < NMAX then                -- Cas ou l'on peut ajouter au dessus de Imax
+                P_valeurs(P_imax + 1) := P_ajout;
+                P_bool(P_imax + 1) := True;
+                P_imax := P_imax + 1;
+                P_nb_elem := P_nb_elem + 1;
+            else
+                Put_line("Ajout impossible, tableau plein");
+            end if;
+
+        end if;
+
     end Ajout;
 
 
