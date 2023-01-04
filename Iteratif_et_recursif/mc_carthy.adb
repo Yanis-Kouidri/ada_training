@@ -1,7 +1,7 @@
 with Ada.Text_IO; use Ada.Text_IO;
 -- with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 procedure mc_carthy is
-    NMAX: constant Integer := 210;
+    NMAX: constant Integer := 110;
 
     function mc_Carthy (n : Integer) return Integer is -- Fonction mc_Carthy pour la récursivité
     begin
@@ -16,6 +16,6 @@ procedure mc_carthy is
 begin
     
     for n in 0..NMAX loop
-        Put_line("M(" & Integer'Image(n) & ") = " &  Integer'Image(mc_Carthy(n)));
+        Put_line("M(" & Integer'Image(n) & " ) = " &  Integer'Image(mc_Carthy(n)));
     end loop;
 end mc_carthy; 
