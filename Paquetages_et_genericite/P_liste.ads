@@ -1,4 +1,4 @@
-PACKAGE liste_chainee IS
+PACKAGE P_liste IS
 
     -- Déclaration des types :
     Type T_cellule;
@@ -31,4 +31,4 @@ PACKAGE liste_chainee IS
     procedure enlever(list : in out T_liste_chainee; a_enlever : in Integer);
 
 
-END liste_chainee; 
+END P_liste; 

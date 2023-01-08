@@ -1,7 +1,7 @@
 with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 with Ada.Unchecked_Deallocation ;
-PACKAGE BODY liste_chainee IS
+PACKAGE BODY P_liste IS
 
     LISTE_VIDE_ERROR: EXCEPTION;
     FIN_ERROR: EXCEPTION;
@@ -35,8 +35,10 @@ PACKAGE BODY liste_chainee IS
         if list /= null then
             put(list.all.element);
             afficher(list.all.suivant);
+        else 
+            new_line;
+            new_line;
         end if;
-        new_line;
 
     end afficher;
 
@@ -118,4 +120,4 @@ PACKAGE BODY liste_chainee IS
     end enlever; 
 
 
-END liste_chainee; 
+END P_liste; 
