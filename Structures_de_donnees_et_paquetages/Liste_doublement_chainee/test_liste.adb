@@ -1,6 +1,7 @@
 with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 with liste_doublement_chainee; use liste_doublement_chainee;
+
 procedure test_liste is
     -- Déclaration de types
     
@@ -15,24 +16,25 @@ begin
     ma_liste := creation;
 
     if ma_liste = null then
-        put("OK");
+        put_line("OK");
     else
-        put("KO");
+        put_line("KO");
     end if;
 
     ajout(ma_liste, 6);
-    if ma_liste.all.element = 6 then
-        put("OK");
+    ajout(ma_liste, 7);
+    if ma_liste.all.element = 7 then
+        put_line("OK");
     else
-        put("KO");
+        put_line("KO");
     end if;
 
 
     suppression(ma_liste);
     if ma_liste = null then
-        put("OK");
+        put_line("OK");
     else
-        put("KO");
+        put_line("KO");
     end if;
 
     ajout(ma_liste, 6);
@@ -43,9 +45,9 @@ begin
     recherche(ma_liste, 6);
 
     if ma_liste.all.element = 6 then
-        put("OK");
+        put_line("OK");
     else
-        put("KO");
+        put_line("KO");
     end if;
 
 end test_liste; 
