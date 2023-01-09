@@ -33,19 +33,6 @@ PACKAGE BODY P_liste_gen IS
     end inserer_en_tete;
 
 
-    procedure afficher(list : in T_liste_chainee) is
-    begin
-        if list /= null then
-            put(image(list.all.element));
-            afficher(list.all.suivant);
-        else 
-            new_line;
-            new_line;
-        end if;
-
-    end afficher;
-    
-
     function rechercher(list : in T_liste_chainee ; elem : in Type_element) return T_liste_chainee is
     begin
         if list /= null then
@@ -132,6 +119,17 @@ PACKAGE BODY P_liste_gen IS
             new_line;
         end if;
     end pour_chaque;
+
+
+    procedure pour_un(list : in T_liste_chainee) is
+    begin
+        if list /= null then
+            traiter(list.all.element);
+        else
+            new_line;
+            new_line;
+        end if;
+    end pour_un;
 
 
 END P_liste_gen; 

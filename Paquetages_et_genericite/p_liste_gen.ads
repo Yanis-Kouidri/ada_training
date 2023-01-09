@@ -1,6 +1,5 @@
 generic
     type Type_element is private;
-    with function image(Item: in Type_element) return String;
     
 PACKAGE P_liste_gen IS
 
@@ -16,7 +15,7 @@ PACKAGE P_liste_gen IS
 
     procedure inserer_en_tete(list : in out T_liste_chainee ; elem : in Type_element);
 
-    procedure afficher(list : in T_liste_chainee);
+    --procedure afficher(list : in T_liste_chainee);
     
     function rechercher(list : in T_liste_chainee ; elem : in Type_element) return T_liste_chainee;
 
@@ -29,6 +28,12 @@ PACKAGE P_liste_gen IS
     generic
         with procedure traiter (element : in Type_element);
     procedure pour_chaque (list : in T_liste_chainee);
+
+    generic
+        with procedure traiter (element : in Type_element);
+    procedure pour_un (list : in T_liste_chainee);
+    
+
 
 private
     -- Définition des types :
