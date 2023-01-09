@@ -4,8 +4,10 @@ with P_liste_gen;
 
 procedure test_liste_gen is
 
+    -- Instantiation des packages :
     Package P_liste_entier is new P_liste_gen(Type_element => Integer); use P_liste_entier;
     Package P_liste_char is new P_liste_gen(Type_element => Character); use P_liste_char;
+
     -- Déclaration de types
     
 
@@ -21,6 +23,7 @@ procedure test_liste_gen is
         put(element);
     end afficher_entier;
 
+    -- Instantiation des procedures génériques :
     procedure afficher is new p_liste_entier.pour_chaque(traiter => afficher_entier);
     procedure afficher is new p_liste_char.pour_chaque(traiter => afficher_char);
 
@@ -36,9 +39,9 @@ begin
     put_line("Bienvenue dans le programme de test du paquetage list_chainee");
     put_line("list_chainee implémante une liste chainée d'éléménts de type générique avec diverses opérations définies dans le fichier source");
     new_line;
-    put_line("------------------");
+    put_line("  ------------------");
     put_line(" Test liste d'entier : ");
-    put_line("------------------");
+    put_line("  ------------------");
     
 
     new_line;
@@ -47,6 +50,7 @@ begin
 
     new_line;
     put_line("Test de la fonction est_vide");
+
     if est_vide(ma_liste_entier) then
         put_line("La liste est vide : Réussite");
     else
@@ -87,9 +91,9 @@ begin
     new_line;
 
 
-    put_line("------------------");
+    put_line("  ------------------");
     put_line(" Test liste de caractères : ");
-    put_line("------------------");
+    put_line("  ------------------");
 
 
     new_line;
