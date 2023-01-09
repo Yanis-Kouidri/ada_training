@@ -1,7 +1,9 @@
 with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 with Ada.Unchecked_Deallocation ;
+
 PACKAGE BODY P_liste_gen IS
+
 
     LISTE_VIDE_ERROR: EXCEPTION;
     FIN_ERROR: EXCEPTION;
@@ -9,10 +11,9 @@ PACKAGE BODY P_liste_gen IS
     
     procedure free is new Ada.Unchecked_Deallocation(T_cellule, T_liste_chainee) ;  
 
-    -- Je suis obligé de changer la fonction en procédure car la type T_liste_chainee est limited private
-    procedure creer_liste_vide(list : in out T_liste_chainee) is 
+    function creer_liste_vide return T_liste_chainee is
     begin
-        list := null;
+        return null;
     end creer_liste_vide;
 
     function est_vide(list: in T_liste_chainee) return boolean is
@@ -22,6 +23,7 @@ PACKAGE BODY P_liste_gen IS
 
 
     procedure inserer_en_tete(list : in out T_liste_chainee ; elem : in Type_element) is
+
         temp : T_liste_chainee;
     begin
         temp := list;
@@ -34,7 +36,7 @@ PACKAGE BODY P_liste_gen IS
     procedure afficher(list : in T_liste_chainee) is
     begin
         if list /= null then
-            put(list.all.element);
+            put(image(list.all.element));
             afficher(list.all.suivant);
         else 
             new_line;
@@ -42,25 +44,23 @@ PACKAGE BODY P_liste_gen IS
         end if;
 
     end afficher;
-
     
-    -- Je suis obligé de changer la fonction en procédure car la type T_liste_chainee est limited private
-    procedure rechercher(list : in T_liste_chainee ; elem : in Type_element ; retour : out T_liste_chainee) is
+
+    function rechercher(list : in T_liste_chainee ; elem : in Type_element) return T_liste_chainee is
     begin
         if list /= null then
             if elem = list.all.element then
-                retour := list;
+                return list;
             else
-                rechercher(list.all.suivant, elem, retour);
+                return rechercher(list.all.suivant, elem);
             end if;
         else
-            retour := null;
+            return null;
         end if;
     end rechercher;
 
 
     procedure inserer_apres(list : in T_liste_chainee; data, new_data : in Type_element) is
-
     begin
         if est_vide(list) then
             raise LISTE_VIDE_ERROR ;
@@ -120,6 +120,18 @@ PACKAGE BODY P_liste_gen IS
         when LISTE_VIDE_ERROR => put_line("Erreur : Liste vide.");
         when FIN_ERROR => put_line("Erreur : Element non trouvé, suppression impossible.");
     end enlever; 
+
+
+    procedure pour_chaque(list : in T_liste_chainee) is
+    begin
+        if list /= null then
+            traiter(list.all.element);
+            pour_chaque(list.all.suivant);
+        else
+            new_line;
+            new_line;
+        end if;
+    end pour_chaque;
 
 
 END P_liste_gen; 
