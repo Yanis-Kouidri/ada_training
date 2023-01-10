@@ -82,6 +82,13 @@ begin
     ajout(ma_liste, 4);
     ajout(ma_liste, 9);
     ajout(ma_liste, 1);
+    ajout(ma_liste, 11);
+    ajout(ma_liste, 15);
+    ajout(ma_liste, 11);
+    ajout(ma_liste, 2);
+    ajout(ma_liste, 0);
+
+    
     put_line("Affichage de la liste :");
     affichage(ma_liste);
 

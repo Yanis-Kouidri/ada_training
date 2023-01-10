@@ -14,21 +14,57 @@ PACKAGE BODY liste_doublement_chainee IS
 
     -- L'ajout se fera à la queue de la liste
     Procedure ajout(liste : in out T_liste ; elem : in Integer) is
+        temp : T_liste;
     begin
         
+        -- Cas ou la liste est vide :
         if liste = null then
             liste := new T_noeud;
             liste.all.element := elem;
             liste.all.precedent := null;
             liste.all.suivant := null;
-        elsif liste.all.suivant = null then
-            liste.all.suivant := new T_noeud;
-            liste.all.suivant.all.element := elem;
-            liste.all.suivant.all.precedent := liste;
-            liste.all.suivant.all.suivant := null;
-            liste := liste.all.suivant;
-        else 
-            ajout(liste.all.suivant, elem);
+
+        -- Cas ou l'élément à insérer est suppérieur à l'élément courant :
+        elsif elem >= liste.all.element then
+            -- On parcourt la liste jusqu'à atteindre l'endroit ou l'insérer ou le bout
+            while elem > liste.all.element AND liste.all.suivant /= null loop
+                liste := liste.all.suivant;
+            end loop;
+            temp := liste;
+            -- L'élément à ajouter est quand meme plus grand que l'élément courant alors on l'ajoute en bout de liste 
+            if elem > liste.all.element then
+                liste.all.suivant := new T_noeud;
+                liste := liste.all.suivant;
+                liste.all.element := elem;
+                liste.all.precedent := temp;
+                liste.all.suivant := null;
+
+            else
+                liste := new T_noeud;
+                liste.all.element := elem;
+                liste.all.precedent := temp.all.precedent;
+                liste.all.suivant := temp;
+            end if;
+        else
+            while elem < liste.all.element AND liste.all.precedent /= null loop
+                liste := liste.all.precedent;
+            end loop;
+            temp := liste;
+
+            if elem < liste.all.element then
+                liste.all.precedent := new T_noeud;
+                liste := liste.all.precedent;
+                liste.all.element := elem;
+                liste.all.suivant := temp;
+                liste.all.precedent := null;
+
+            else
+                liste := new T_noeud;
+                liste.all.element := elem;
+                liste.all.suivant := temp.all.precedent;
+                liste.all.precedent := temp;
+            end if;
+
         end if;
     end ajout; 
 
