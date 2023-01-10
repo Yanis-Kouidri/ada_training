@@ -91,4 +91,18 @@ begin
         put_line("KO");
     end if;
 
+    recherche(ma_liste, 9);
+    if ma_liste.all.element = 1 then
+        put_line("OK");
+    else
+        put_line("KO");
+    end if;
+
+    recherche(ma_liste, 66);
+    if ma_liste.all.element = 1 then
+        put_line("OK");
+    else
+        put_line("KO");
+    end if;
+
 end test_liste; 

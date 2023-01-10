@@ -61,9 +61,24 @@ PACKAGE BODY liste_doublement_chainee IS
 
 
     Procedure recherche(liste : in out T_liste ; elem : in Integer) is
+        entree : T_liste := liste; --noeud courant de la liste au moment de son appel
+        trouve : boolean := false;
     begin
+        while liste.all.precedent /= null loop -- On remonte à la tête de la liste
+            liste := liste.all.precedent;
+        end loop;
+        while liste.all.suivant /= null and not trouve loop
+            if liste.all.element = elem then
+                trouve := true;
+            else 
+                liste := liste.all.suivant;
+            end if;
+        end loop;
 
-        null;
+        if not trouve then
+            liste := entree;
+        end if;
+
     end recherche;
 
 
