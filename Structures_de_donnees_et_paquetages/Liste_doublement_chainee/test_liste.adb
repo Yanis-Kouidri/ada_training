@@ -82,27 +82,34 @@ begin
     ajout(ma_liste, 4);
     ajout(ma_liste, 9);
     ajout(ma_liste, 1);
+    put_line("Affichage de la liste :");
+    affichage(ma_liste);
 
     recherche(ma_liste, 6);
 
+    put_line("[Test de recherche de la valeur 6 :]");
     if ma_liste.all.element = 6 then
         put_line("OK");
     else
         put_line("KO");
     end if;
 
-    recherche(ma_liste, 9);
+    put_line("[Test de recherche de la valeur 1 :]");
+    recherche(ma_liste, 1);
     if ma_liste.all.element = 1 then
         put_line("OK");
     else
         put_line("KO");
     end if;
 
+    put_line("[Test de recherche de la valeur 66 qui n'existe pas :]");
     recherche(ma_liste, 66);
     if ma_liste.all.element = 1 then
         put_line("OK");
     else
         put_line("KO");
     end if;
+
+
 
 end test_liste; 

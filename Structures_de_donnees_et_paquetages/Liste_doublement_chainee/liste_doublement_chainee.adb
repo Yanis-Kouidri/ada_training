@@ -67,7 +67,7 @@ PACKAGE BODY liste_doublement_chainee IS
         while liste.all.precedent /= null loop -- On remonte à la tête de la liste
             liste := liste.all.precedent;
         end loop;
-        while liste.all.suivant /= null and not trouve loop
+        while liste /= null and not trouve loop
             if liste.all.element = elem then
                 trouve := true;
             else 
@@ -83,9 +83,18 @@ PACKAGE BODY liste_doublement_chainee IS
 
 
     Procedure affichage(liste : in T_liste) is
+        lecteur : T_liste := liste;
     begin
+        while lecteur.all.precedent /= null loop -- On remonte à la tête de la liste
+            lecteur := lecteur.all.precedent;
+        end loop;
 
-        null;
+        while lecteur /= null loop -- On parcourt toute la liste jusqu'à la fin
+            put(lecteur.all.element);
+            lecteur := lecteur.all.suivant;
+        end loop;
+        new_line;
+
     end affichage;
 
 
