@@ -37,14 +37,22 @@ PACKAGE BODY liste_doublement_chainee IS
         temp : T_liste := liste;
     begin
         if liste /= null then -- Vérification que la liste n'est pas déjà vide
+
             if liste.all.precedent /= null then -- S'il existe un précédent :
                 liste := liste.all.precedent; -- On place la tete de lecture sur l'élément précédent
                 liste.all.suivant := liste.all.suivant.all.suivant; -- on branche le précédent sur le suivant
                 if liste.all.suivant /= null then
                     liste.all.suivant.all.precedent := liste; -- et on branche le suivant sur la précédent (si possible)
                 end if;
-                free(temp); -- On n'oublie pas de libérer la mémoire du noeud supprimé
+
+            elsif liste.all.suivant /= null then -- S'il existe un suivant :
+                liste := liste.all.suivant; -- On place la tete de lecture sur l'élément suivant
+                liste.all.precedent := null; -- On se détache de l'élément précédent
+
+            elsif liste.all.precedent = null and liste.all.suivant = null then -- Sinon
+                liste := null;
             end if;
+            free(temp); -- On n'oublie pas de libérer la mémoire du noeud supprimé
         else
             put_line("Suppression impossible : liste vide");
 

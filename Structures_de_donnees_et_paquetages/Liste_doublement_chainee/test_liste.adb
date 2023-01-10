@@ -15,13 +15,22 @@ procedure test_liste is
 begin
     ma_liste := creation;
 
+    put_line("[Test de création de liste :]");
     if ma_liste = null then
         put_line("OK");
     else
         put_line("KO");
     end if;
 
+    put_line("[Test de l'ajout de la valeur 6 à la liste :]");
     ajout(ma_liste, 6);
+    if ma_liste.all.element = 6 then
+        put_line("OK");
+    else
+        put_line("KO");
+    end if;
+
+    put_line("[Test de l'ajout de la valeur 7 à la liste :]");
     ajout(ma_liste, 7);
     if ma_liste.all.element = 7 then
         put_line("OK");
@@ -29,13 +38,45 @@ begin
         put_line("KO");
     end if;
 
+    ajout(ma_liste, 8);
+    ma_liste := ma_liste.all.precedent;
+    
 
+    put_line("[Test de suppression d'une valeur au milieu de la liste :]");
+    suppression(ma_liste);
+    if ma_liste.all.element = 6 then
+        put_line("OK");
+    else
+        put_line("KO");
+    end if;
+
+    put_line("[Test de suppression d'une valeur en tete de la liste :]");
+    suppression(ma_liste);
+    if ma_liste.all.element = 8 then
+        put_line("OK");
+    else
+        put_line("KO");
+    end if;
+
+    ajout(ma_liste, 9);
+    ajout(ma_liste, 10);
+    put_line("[Test de suppression d'une valeur en fin de la liste :]");
+    suppression(ma_liste);
+    if ma_liste.all.element = 9 then
+        put_line("OK");
+    else
+        put_line("KO");
+    end if;
+
+    put_line("[Test de suppression de la seule valeur restante de la liste :]");
+    suppression(ma_liste);
     suppression(ma_liste);
     if ma_liste = null then
         put_line("OK");
     else
         put_line("KO");
     end if;
+
 
     ajout(ma_liste, 6);
     ajout(ma_liste, 4);
