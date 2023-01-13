@@ -47,4 +47,16 @@ BEGIN
     inserer(mon_abr, 9);
     inserer(mon_abr, 8);
 
+    IF recherche(mon_abr, 5) then
+        put_line("OK");
+    ELSE 
+        put_line("KO");
+    END IF;
+    IF not recherche(mon_abr, 85) then
+        put_line("OK");
+    ELSE 
+        put_line("KO");
+    END IF;
+        
+
 END test_AB; 

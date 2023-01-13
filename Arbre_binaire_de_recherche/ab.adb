@@ -58,7 +58,19 @@ PACKAGE BODY AB IS
     -- Recherche dans l'AB Abr.
     FUNCTION Recherche(Abr : IN T_AB ; Donnee : IN Integer) return boolean IS
     BEGIN
-        return false;
+
+        IF abr = null then
+            return false;
+        ELSIF Donnee < abr.all.donnee then
+            return recherche(abr.all.sous_arbre_gauche, donnee);
+        elsif Donnee > abr.all.donnee then
+            return recherche(abr.all.sous_arbre_droit, donnee);
+        elsif Donnee = abr.all.donnee then
+            return true;
+        else
+            return false;
+        end if;
+
 
     END Recherche;
 
