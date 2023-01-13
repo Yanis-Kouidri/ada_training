@@ -23,50 +23,71 @@ begin
     put_line("Bienvenue dans la calculatrice !");
 
     while true loop
-        get_line(commande, longueur);
-        n := Integer'Value(commande(1..longueur));
-        empiler(ma_pile, n);
+        <<VAL1>>
+        begin
+            get_line(commande, longueur);
+            n := Integer'Value(commande(1..longueur));
+            empiler(ma_pile, n);
+        exception
+            when CONSTRAINT_ERROR =>
+                put_line("La valeur entrée doit être un entier");
+                goto VAL1;
+        end;
 
-        get_line(commande, longueur);
-        n := Integer'Value(commande(1..longueur));
-        empiler(ma_pile, n);
+        <<VAL2>>
+        begin
+            get_line(commande, longueur);
+            n := Integer'Value(commande(1..longueur));
+            empiler(ma_pile, n);
+        exception
+            when CONSTRAINT_ERROR =>
+                put_line("La valeur entrée doit être un entier");
+                goto VAL2;
+        end;
         
-        get_line(commande, longueur);
+        <<OPP>>
+        begin
+            get_line(commande, longueur);
 
-        case commande(1) is
-            when '+' =>
-                res := sommet(ma_pile);
-                depiler(ma_pile);
-                res := sommet(ma_pile) + res;
-                empiler(ma_pile, res);
-                put(sommet(ma_pile));
-            when '-' =>
-                res := sommet(ma_pile);
-                depiler(ma_pile);
-                res := sommet(ma_pile) - res;
-                empiler(ma_pile, res);
-                put(sommet(ma_pile));
-            when '*' =>
-                res := sommet(ma_pile);
-                depiler(ma_pile);
-                res := sommet(ma_pile) * res ; 
-                empiler(ma_pile, res);
-                put(sommet(ma_pile));
-            when '/' =>
-                res := sommet(ma_pile);
-                depiler(ma_pile);
-                res := sommet(ma_pile) / res;
-                empiler(ma_pile, res);
-                put(sommet(ma_pile));
-            when others => raise OPE_ERR;
+            case commande(1) is
+                when '+' =>
+                    res := sommet(ma_pile);
+                    depiler(ma_pile);
+                    res := sommet(ma_pile) + res;
+                    empiler(ma_pile, res);
+                    put(sommet(ma_pile));
+                when '-' =>
+                    res := sommet(ma_pile);
+                    depiler(ma_pile);
+                    res := sommet(ma_pile) - res;
+                    empiler(ma_pile, res);
+                    put(sommet(ma_pile));
+                when '*' =>
+                    res := sommet(ma_pile);
+                    depiler(ma_pile);
+                    res := sommet(ma_pile) * res ; 
+                    empiler(ma_pile, res);
+                    put(sommet(ma_pile));
+                when '/' =>
+                    res := sommet(ma_pile);
+                    depiler(ma_pile);
+                    res := sommet(ma_pile) / res;
+                    empiler(ma_pile, res);
+                    put(sommet(ma_pile));
+                when others => raise OPE_ERR;
 
-        end case;
+            end case;
+        exception
+            when OPE_ERR =>
+                put_line("Opérateur saisi incorrect");
+                put_line("Choix : [ + - * / ]");
+                goto OPP;
+
+        end;
         
     new_line;
 
     end loop;
     
-exception
-    when OPE_ERR => put_line("Opérateur saisi incorrect");
     
 end calculatrice; 
