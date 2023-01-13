@@ -1,33 +1,50 @@
 with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Integer_Text_IO; use Ada.Integer_Text_IO;
 with AB; use AB;
-procedure test_AB is
+PROCEDURE test_AB IS
     -- Déclaration de types
     
 
     -- Déclaration de procédures et fonctions
 
-    procedure aff_vide(abr : in T_AB) is
-    begin
+    -- Procedure de test pour debug
+    PROCEDURE aff_vide(abr : IN T_AB) IS
+    BEGIN
 
-        if est_vide(abr) then
+        IF est_vide(abr) THEN
             put_line("C'est vide");
-        else 
+        ELSE 
             put_line("Ce n'est pas vide");
-        end if;
+        END IF;
     
-    end aff_vide;
+    END aff_vide;
     
     
     -- Déclaration de variables
 
     mon_abr : T_AB;
-begin
+BEGIN
     initialiser(mon_abr);
-    aff_vide(mon_abr);
+
+    IF est_vide(mon_abr) THEN
+        put_line("OK");
+    ELSE 
+        put_line("KO");
+    END IF;
 
     inserer(mon_abr, 8);
 
-    aff_vide(mon_abr);
+    IF est_vide(mon_abr) THEN
+        put_line("KO");
+    ELSE 
+        put_line("OK");
+    END IF;
 
-end test_AB; 
+    inserer(mon_abr, 1);
+    inserer(mon_abr, 4444);
+    inserer(mon_abr, 5);
+    inserer(mon_abr, 7);
+    inserer(mon_abr, 9);
+    inserer(mon_abr, 8);
+
+END test_AB; 

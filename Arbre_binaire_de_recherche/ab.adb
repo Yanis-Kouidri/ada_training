@@ -4,76 +4,86 @@ USE Ada.Integer_Text_IO, Ada.Text_IO ;
 PACKAGE BODY AB IS
 
     -- Initialiser un AB Abr. L'AB est vide.
-    procedure Initialiser(Abr : out T_AB) is
-    begin
-        abr := null;
+    PROCEDURE Initialiser(Abr : OUT T_AB) IS
+    BEGIN
+        abr := NULL;
 
-    end Initialiser;
+    END Initialiser;
 
     -- Est-ce qu'un AB Abr est vide ?
-    function Est_Vide (Abr : in T_AB) return boolean is
-    begin
-        return abr = null;
-    end Est_Vide;
+    FUNCTION Est_Vide (Abr : IN T_AB) return boolean IS
+    BEGIN
+        return abr = NULL;
+    END Est_Vide;
 
     -- Obtenir le nombre d'éléments d'un AB
-    function Taille (Abr : in T_AB) return Integer is
-    begin
-        if Abr.all.Sous_Arbre_Gauche /= null then
+    FUNCTION Taille (Abr : IN T_AB) return Integer IS
+    BEGIN
+        IF Abr.all.Sous_Arbre_Gauche /= NULL THEN
             return 1 + Taille(Abr.all.Sous_Arbre_Gauche); 
-        elsif Abr.all.Sous_Arbre_Droit /= null then
+        ELSIF Abr.all.Sous_Arbre_Droit /= NULL THEN
             return 1 + Taille(Abr.all.Sous_Arbre_Droit); 
-        else
+        ELSE
             return 0;
-        end if;
+        END if;
 
-    end Taille;
+    END Taille;
 
     -- Insérer la donnée dans l'AB Abr.
-    procedure Inserer(Abr : in out T_AB ; Donnee : in Integer) is
+    PROCEDURE Inserer(Abr : IN OUT T_AB ; Donnee : IN Integer) IS
         
-    begin
+    BEGIN
 
-        if Abr = null then
+        -- Cas ou on atteint une feuille de l'arbre : c'est qu'on a trouvé l'endroit ou insérer la valeur
+        IF Abr = NULL THEN
             Abr := new T_Noeud;
             Abr.all.Donnee := Donnee;
-            Abr.sous_arbre_gauche := null;
-            Abr.sous_arbre_droit := null;
-        elsif abr.all.donnee > Donnee then
+            Abr.sous_arbre_gauche := NULL;
+            Abr.sous_arbre_droit := NULL;
 
-        end if;
+        -- Dans le cas ou notre valeur a ajouter est plus petite que celle courante alors il faut aller à gauche 
+        ELSIF Donnee < abr.all.donnee  THEN
+            Inserer( abr.all.sous_arbre_gauche, Donnee);
 
-    end Inserer;
+        -- Dans le cas ou notre valeur a ajouter est plus grande que celle courante alors il faut aller à droite 
+        ELSIF Donnee > abr.all.donnee THEN
+            Inserer( abr.all.sous_arbre_droit, Donnee);
+        ELSE 
+            put_line("Donnée déjà présente");
+
+        END IF;
+
+    END Inserer;
 
     -- Recherche dans l'AB Abr.
-    function Recherche(Abr : in T_AB ; Donnee : in Integer) return boolean is
-    begin
+    FUNCTION Recherche(Abr : IN T_AB ; Donnee : IN Integer) return boolean IS
+    BEGIN
         return false;
 
-    end Recherche;
+    END Recherche;
 
     -- Modifier la donnée dans l'AB Abr.
     -- tar_donnee = target donnee = donnée ciblée (donnée qui va être remplacer par src_donnée)
     -- src_donnee = donnée source (donnée qui va remplacer tar_donné)
-    procedure Modifier (Abr : in out T_AB ; src_donnee : in Integer ; tar_donnee : in Integer) is
-    begin
+    PROCEDURE Modifier (Abr : IN OUT T_AB ; src_donnee : IN Integer ; tar_donnee : IN Integer) IS
+    BEGIN
 
-        null;
-    end Modifier;
+        NULL;
+    END Modifier;
 
     -- Supprimer la donnée dans l'AB Abr.
-    procedure Supprimer (Abr : in out T_AB; donnee : in Integer) is 
-    begin
-        null;
+    PROCEDURE Supprimer (Abr : IN OUT T_AB; donnee : IN Integer) IS 
+    BEGIN
+        NULL;
 
-    end Supprimer;
+    END Supprimer;
 
     -- Afficher un AB Abr
-    procedure Afficher (Abr : in T_AB) is
-    begin
-        null;
+    PROCEDURE Afficher (Abr : IN T_AB) IS
+    BEGIN
+        NULL;
 
-    end Afficher;
+    END Afficher;
 
 
 
