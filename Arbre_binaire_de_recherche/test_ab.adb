@@ -61,33 +61,71 @@ BEGIN
         put_line("KO");
     END IF;
 
+    afficher(mon_abr);
+    new_line;
+
+    put_line("Suppression de 7");
     supprimer(mon_abr, 7);
     afficher(mon_abr);
     new_line;
 
+    put_line("Suppression de 4444");
     supprimer(mon_abr, 4444);
     afficher(mon_abr);
     new_line;
 
+    put_line("Suppression de 1");
     supprimer(mon_abr, 1);
     afficher(mon_abr);
     new_line;
 
+    put_line("Suppression de 156");
     supprimer(mon_abr, 156);
     afficher(mon_abr);
     new_line;
 
+    new_line;
+    put_line("Ajout de valeurs dans l'arbre");
     inserer(mon_abr, 54);
     inserer(mon_abr, 90);
     inserer(mon_abr, 3);
     inserer(mon_abr, 16);
     inserer(mon_abr, 81);
 
+    new_line;
+    put_line("Suppression de 8");
     supprimer(mon_abr, 8);
     afficher(mon_abr);
     new_line;
 
---    modifier(mon_abr, 55, 9);
+    
+    put_line("Modification de la valeur 9 par la valeur 55");
+    modifier(mon_abr, 55, 9);
+
+    afficher(mon_abr);
+    new_line;
+
+    modifier(mon_abr, 93, 777);
+    
+    new_line;
+    afficher(mon_abr);
+    new_line;
+
+    put_line("Nombre d'éléments dans l'abre :");
+    put(taille(mon_abr));
+    new_line;
+
+    supprimer(mon_abr, 54);
+    supprimer(mon_abr, 55);
+
+    new_line;
+    afficher(mon_abr);
+    new_line;
+
+    put_line("Nombre d'éléments dans l'abre :");
+    put(taille(mon_abr));
+    new_line;
+
         
 
 END test_AB; 

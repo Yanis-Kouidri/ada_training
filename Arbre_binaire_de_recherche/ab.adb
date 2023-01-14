@@ -24,13 +24,11 @@ PACKAGE BODY AB IS
     -- Obtenir le nombre d'éléments d'un AB
     FUNCTION Taille (Abr : IN T_AB) return Integer IS
     BEGIN
-        IF Abr.all.Sous_Arbre_Gauche /= NULL THEN
-            return 1 + Taille(Abr.all.Sous_Arbre_Gauche); 
-        ELSIF Abr.all.Sous_Arbre_Droit /= NULL THEN
-            return 1 + Taille(Abr.all.Sous_Arbre_Droit); 
-        ELSE
+        if abr /= null then
+            return (1 + Taille(Abr.all.Sous_Arbre_Gauche) + Taille(Abr.all.Sous_arbre_droit) ); 
+        else
             return 0;
-        END if;
+        end if;
 
     END Taille;
 
@@ -60,37 +58,62 @@ PACKAGE BODY AB IS
 
     END Inserer;
 
-    -- Recherche dans l'AB Abr.
-    FUNCTION Recherche(Abr : IN T_AB ; Donnee : IN Integer) return boolean IS
+    -- Recherche dans l'AB Abr. et renvoie la un pointeur sur noeud si trouvé, null sinon
+    FUNCTION Aller_a(Abr : IN T_AB ; Donnee : IN Integer) return T_AB IS
     BEGIN
 
         IF abr = null then
-            return false;
+            return null;
         ELSIF Donnee < abr.all.donnee then
-            return recherche(abr.all.sous_arbre_gauche, donnee);
+            return Aller_a(abr.all.sous_arbre_gauche, donnee);
         elsif Donnee > abr.all.donnee then
-            return recherche(abr.all.sous_arbre_droit, donnee);
+            return Aller_a(abr.all.sous_arbre_droit, donnee);
         elsif Donnee = abr.all.donnee then
-            return true;
+            return Abr;
         -- Le else ici ne sert a priori a rien mais je le mets par précaution, pour traiter l'ensemble des cas
         else
-            return false;
+            return null;
         end if;
 
+    END aller_a;
+
+
+    FUNCTION Recherche(Abr : IN T_AB ; Donnee : IN Integer) return boolean IS
+    BEGIN
+
+        IF aller_a(Abr, Donnee) = null then
+            return false;
+        else
+            return true;
+        end if;
 
     END Recherche;
+
 
     -- Modifier la donnée dans l'AB Abr.
     -- tar_donnee = target donnee = donnée ciblée (donnée qui va être remplacer par src_donnée)
     -- src_donnee = donnée source (donnée qui va remplacer tar_donné)
+    -- Pour des raison de cohérence la modification d'une valeur se fera en deux temps :
+    -- Dans un premier temps je commence par supprimer la valeur ciblée
+    -- Puis j'ajoute la valeur donnée par l'appelant.
+    --
+    -- J'ai fait le choix de ne pas directement modifier la valeur ciblée avec la valeur source car cela pourrait comprometre 
+    -- la relation d'odre de l'abre
     PROCEDURE Modifier (Abr : IN OUT T_AB ; src_donnee : IN Integer ; tar_donnee : IN Integer) IS
     BEGIN
-        Null;
+        if Recherche(abr, tar_donnee) then
+            Supprimer( abr, tar_donnee);
+            inserer(abr, src_donnee);
+        else
+            put_line("Valeur cible non présente dans l'arbre");
+        end if;
+
     END Modifier;
 
     -- Supprimer la donnée dans l'AB Abr.
     PROCEDURE Supprimer (Abr : IN OUT T_AB; donnee : IN Integer) IS 
         temp : T_AB := null;
+
     BEGIN
         IF abr /= null then
             -- Dans un premier temps on cherche a atteindre la bonne valeur
@@ -125,14 +148,8 @@ PACKAGE BODY AB IS
             end if;
 
         else
-            put_line("Valeur a supprimer non trouvée");
+            put_line("Valeur a supprimer non trouvée : Modification impossible");
         end if;
-            
-
-
-
-
-
     END Supprimer;
 
     -- Afficher un AB Abr

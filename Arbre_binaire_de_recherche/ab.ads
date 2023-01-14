@@ -17,6 +17,8 @@ PACKAGE AB IS
     -- Insérer la donnée dans l'AB Abr.
     PROCEDURE Inserer(Abr : IN OUT T_AB ; Donnee : IN Integer);
 
+    FUNCTION Aller_a(Abr : IN T_AB ; Donnee : IN Integer) return T_AB; 
+
     -- Recherche dans l'AB Abr.
     FUNCTION Recherche(Abr : IN T_AB ; Donnee : IN Integer) RETURN boolean;
 
