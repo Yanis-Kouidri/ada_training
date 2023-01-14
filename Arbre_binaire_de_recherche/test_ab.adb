@@ -47,6 +47,9 @@ BEGIN
     inserer(mon_abr, 9);
     inserer(mon_abr, 8);
 
+    afficher(mon_abr);
+    new_line;
+
     IF recherche(mon_abr, 5) then
         put_line("OK");
     ELSE 
@@ -57,6 +60,34 @@ BEGIN
     ELSE 
         put_line("KO");
     END IF;
+
+    supprimer(mon_abr, 7);
+    afficher(mon_abr);
+    new_line;
+
+    supprimer(mon_abr, 4444);
+    afficher(mon_abr);
+    new_line;
+
+    supprimer(mon_abr, 1);
+    afficher(mon_abr);
+    new_line;
+
+    supprimer(mon_abr, 156);
+    afficher(mon_abr);
+    new_line;
+
+    inserer(mon_abr, 54);
+    inserer(mon_abr, 90);
+    inserer(mon_abr, 3);
+    inserer(mon_abr, 16);
+    inserer(mon_abr, 81);
+
+    supprimer(mon_abr, 8);
+    afficher(mon_abr);
+    new_line;
+
+--    modifier(mon_abr, 55, 9);
         
 
 END test_AB; 

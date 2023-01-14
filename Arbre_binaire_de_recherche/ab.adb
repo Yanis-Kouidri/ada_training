@@ -1,7 +1,12 @@
 WITH Ada.Integer_Text_IO, Ada.Text_IO ;
 USE Ada.Integer_Text_IO, Ada.Text_IO ;
+with Ada.Unchecked_Deallocation ;
 
 PACKAGE BODY AB IS
+
+    procedure free is new Ada.unchecked_deallocation( T_noeud, T_AB);
+
+
 
     -- Initialiser un AB Abr. L'AB est vide.
     PROCEDURE Initialiser(Abr : OUT T_AB) IS
@@ -67,6 +72,7 @@ PACKAGE BODY AB IS
             return recherche(abr.all.sous_arbre_droit, donnee);
         elsif Donnee = abr.all.donnee then
             return true;
+        -- Le else ici ne sert a priori a rien mais je le mets par précaution, pour traiter l'ensemble des cas
         else
             return false;
         end if;
@@ -79,21 +85,66 @@ PACKAGE BODY AB IS
     -- src_donnee = donnée source (donnée qui va remplacer tar_donné)
     PROCEDURE Modifier (Abr : IN OUT T_AB ; src_donnee : IN Integer ; tar_donnee : IN Integer) IS
     BEGIN
-
-        NULL;
+        Null;
     END Modifier;
 
     -- Supprimer la donnée dans l'AB Abr.
     PROCEDURE Supprimer (Abr : IN OUT T_AB; donnee : IN Integer) IS 
+        temp : T_AB := null;
     BEGIN
-        NULL;
+        IF abr /= null then
+            -- Dans un premier temps on cherche a atteindre la bonne valeur
+            IF abr.all.donnee = donnee then
+
+                -- Puis on s'occupe de la traiter :
+                If abr.all.sous_arbre_gauche = null and abr.sous_arbre_droit = null then
+                    free(abr);
+                    abr := null;
+
+                elsif abr.all.sous_arbre_gauche /= null then
+                    temp := abr;
+                    abr := abr.all.sous_arbre_gauche;
+                    while abr.all.sous_arbre_droit /= null loop
+                        abr := abr.all.sous_arbre_droit;
+                    end loop;
+                    abr.all.sous_arbre_droit := temp.all.sous_arbre_droit;
+                    free(temp);
+                    temp := null;
+                elsif abr.all.sous_arbre_droit /= null then
+                    temp := abr;
+                    abr := abr.all.sous_arbre_droit;
+                    free(temp);
+                    temp := null;
+                end if;
+
+            ELSIF Donnee < abr.all.donnee then
+                Supprimer(Abr.all.sous_arbre_gauche, donnee);
+
+            elsif Donnee > abr.all.donnee then
+                Supprimer(Abr.all.sous_arbre_droit, donnee);
+            end if;
+
+        else
+            put_line("Valeur a supprimer non trouvée");
+        end if;
+            
+
+
+
+
 
     END Supprimer;
 
     -- Afficher un AB Abr
+    -- Technique utilisé : DFS (Depth-first search)
     PROCEDURE Afficher (Abr : IN T_AB) IS
     BEGIN
-        NULL;
+        if abr /= null then
+            afficher(abr.all.sous_arbre_gauche);
+            put(abr.all.donnee);
+            afficher(abr.all.sous_arbre_droit);
+        end if;
+        
 
     END Afficher;
 
